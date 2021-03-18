@@ -1,23 +1,26 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 abstract class MetroState extends Equatable {
-  const MetroState();
+  final int count;
+  MetroState(this.count);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [count];
 }
 
 class MetroOn extends MetroState {
-  @override
-  String toString() => "Metro ON";
-}
+  final int count;
 
-class MetroTicking extends MetroState {
+  MetroOn(this.count) : super(count);
+
   @override
-  String toString() => "Ticking . ";
+  String toString() => "Ticking $count";
 }
 
 class MetroOff extends MetroState {
+  MetroOff() : super(0);
+
   @override
   String toString() => "Metro OFF";
 }

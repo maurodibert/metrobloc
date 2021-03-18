@@ -8,9 +8,10 @@ abstract class MetroEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class MetroRunned extends MetroEvent {
+class MetroInitialized extends MetroEvent {
   final int speed;
-  MetroRunned({@required this.speed});
+  final int count;
+  MetroInitialized({@required this.speed, @required this.count});
 
   @override
   String toString() => "Metro runned at: $speed";
@@ -22,6 +23,9 @@ class MetroStopped extends MetroEvent {
 }
 
 class MetroTicked extends MetroEvent {
+  final int count;
+  MetroTicked({@required this.count});
+
   @override
   String toString() => "Metro ticked";
 }
