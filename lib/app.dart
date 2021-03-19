@@ -6,8 +6,9 @@ class MetroApp extends MaterialApp {
   MetroApp({Key key})
       : super(
             theme: ThemeData(
-              primaryColor: Color(0xff01D2E4),
-              brightness: Brightness.dark,
+              primaryColor: Color(0xffB74D4D),
+              accentColor: Color(0xffB74D4D),
+              canvasColor: Color(0xffEDEE61),
             ),
             home: const MetroPage());
 }

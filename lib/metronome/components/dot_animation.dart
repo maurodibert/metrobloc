@@ -16,7 +16,7 @@ class DotWidget extends StatefulWidget {
 }
 
 class _DotWidgetState extends State<DotWidget> {
-  final riveFileName = 'animations/dot.riv';
+  final riveFileName = 'animations/metronome.riv';
   Artboard _artboard;
   DotAnimation _dotController;
   // bool _isDotOn = false;
@@ -32,8 +32,9 @@ class _DotWidgetState extends State<DotWidget> {
     final file = RiveFile();
 
     if (file.import(bytes)) {
-      _dotController = DotAnimation('off');
+      _dotController = DotAnimation('on');
       setState(() => _artboard = file.mainArtboard..addController(_dotController));
+      _dotController.off();
     }
   }
 
@@ -51,8 +52,8 @@ class _DotWidgetState extends State<DotWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 300,
-      width: 300,
+      width: 500,
+      height: 500,
       child: _artboard != null
           ? BlocListener<MetroBloc, MetroState>(
               listener: (context, state) {

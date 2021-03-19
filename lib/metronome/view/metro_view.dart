@@ -17,8 +17,6 @@ class _MetroViewState extends State<MetroView> {
 
   @override
   Widget build(BuildContext context) {
-    TextTheme textTheme = Theme.of(context).textTheme;
-
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Center(
@@ -27,13 +25,13 @@ class _MetroViewState extends State<MetroView> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             DotWidget(
-              speed: _sliderValue / 60,
+              speed: _sliderValue / 120,
               isOn: true,
             ),
-            Text(
-              "speed: ${_sliderValue.floor()}",
-              style: textTheme.headline3,
-            )
+            // Text(
+            //   "speed: ${_sliderValue.floor()}",
+            //   style: textTheme.bodyText2,
+            // )
           ],
         ),
       )),
