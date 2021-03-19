@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_metronome/metronome/helpers/audio_player.dart';
 import 'package:flutter_metronome/metronome/metronome.dart';
 import 'package:flutter_metronome/ticker.dart';
 
@@ -34,7 +35,6 @@ class MetroBloc extends Bloc<MetroEvent, MetroState> {
   }
 
   Stream<MetroState> _mapMetroRunnedToState(MetroInitialized initEvent) async* {
-    yield MetroOn(0);
     _tickerSubscription?.cancel();
     _tickerSubscription = _ticker.tick(initEvent.speed).listen((event) {
       print(event.count);
@@ -43,6 +43,7 @@ class MetroBloc extends Bloc<MetroEvent, MetroState> {
   }
 
   Stream<MetroState> _mapMetroTickedToState(MetroTicked event) async* {
+    playAudio('assets/sounds/metronome_click.wav');
     yield MetroOn(event.count);
   }
 
