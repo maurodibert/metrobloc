@@ -10,5 +10,6 @@ class MetroApp extends MaterialApp {
               accentColor: Color(0xffB74D4D),
               canvasColor: Color(0xffEDEE61),
             ),
-            home: const MetroPage());
+            home: const MetroPage(),
+            debugShowCheckedModeBanner: false);
 }

@@ -17,54 +17,80 @@ class _MetroViewState extends State<MetroView> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: Center(
-          child: BlocBuilder<MetroBloc, MetroState>(
-        builder: (context, state) => Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            DotWidget(
-              speed: _sliderValue / 120,
-              isOn: true,
-            ),
-            // Text(
-            //   "speed: ${_sliderValue.floor()}",
-            //   style: textTheme.bodyText2,
-            // )
-          ],
-        ),
-      )),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          BlocBuilder<MetroBloc, MetroState>(
-            buildWhen: (previousState, currentState) => currentState.runtimeType != previousState.runtimeType,
-            builder: (context, state) => SizedBox(
-              height: 60,
-              width: size.width - 150,
-              child: Slider(
-                activeColor: Theme.of(context).primaryColor,
-                value: _sliderValue,
-                min: 40,
-                max: 208,
-                onChangeEnd: (value) =>
-                    BlocProvider.of<MetroBloc>(context).add(MetroInitialized(speed: _sliderValue.floor(), count: 0)),
-                onChanged: (value) => _onChange(value),
+    Color primaryColor = Theme.of(context).primaryColor;
+
+    return BlocBuilder<MetroBloc, MetroState>(
+      builder: (context, state) => Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'MetroBloc',
+                style: TextStyle(fontFamily: 'Staatiches Regular', color: primaryColor, fontSize: 72),
               ),
-            ),
+              Container(
+                color: primaryColor,
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: RichText(
+                    text: TextSpan(
+                      text: 'by ',
+                      style: TextStyle(fontFamily: 'Source Sans Pro', color: Colors.white),
+                      children: <TextSpan>[
+                        TextSpan(text: '@maurodibert', style: TextStyle(fontWeight: FontWeight.bold)),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              MetroWidget(
+                speed: _sliderValue / 120,
+                isOn: true,
+              ),
+            ],
           ),
-          BlocBuilder<MetroBloc, MetroState>(
-            buildWhen: (previousState, currentState) => currentState.runtimeType != previousState.runtimeType,
-            builder: (context, state) => FloatingActionButton(
-              child: Icon(state is MetroOn ? Icons.stop : Icons.play_arrow),
-              onPressed: () => state is MetroOn
-                  ? BlocProvider.of<MetroBloc>(context).add(MetroStopped())
-                  : BlocProvider.of<MetroBloc>(context).add(MetroInitialized(speed: _sliderValue.floor(), count: 0)),
-            ),
+        ),
+        floatingActionButton: SizedBox(
+          width: 460,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 10,
+              ),
+              Text(_sliderValue.floor().toString(),
+                  style: Theme.of(context).textTheme.headline5.copyWith(
+                        color: primaryColor,
+                        fontFamily: 'Staatiches Regular',
+                      )),
+              SizedBox(
+                width: 10,
+              ),
+              SizedBox(
+                height: 60,
+                child: Slider(
+                  divisions: 84,
+                  activeColor: primaryColor,
+                  value: _sliderValue,
+                  min: 40,
+                  max: 208,
+                  onChangeEnd: (value) =>
+                      BlocProvider.of<MetroBloc>(context).add(MetroInitialized(speed: _sliderValue.floor(), count: 0)),
+                  onChanged: (value) => _onChange(value),
+                ),
+              ),
+              FloatingActionButton(
+                child: Icon(state is MetroOn ? Icons.stop : Icons.play_arrow),
+                onPressed: () => state is MetroOn
+                    ? BlocProvider.of<MetroBloc>(context).add(MetroStopped())
+                    : BlocProvider.of<MetroBloc>(context).add(MetroInitialized(speed: _sliderValue.floor(), count: 0)),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

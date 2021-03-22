@@ -20,7 +20,7 @@ class MetroBloc extends Bloc<MetroEvent, MetroState> {
   @override
   Stream<MetroState> mapEventToState(MetroEvent event) async* {
     if (event is MetroInitialized) {
-      yield* _mapMetroRunnedToState(event);
+      yield* _mapMetroInitializedToState(event);
     } else if (event is MetroTicked) {
       yield* _mapMetroTickedToState(event);
     } else {
@@ -34,10 +34,9 @@ class MetroBloc extends Bloc<MetroEvent, MetroState> {
     return super.close();
   }
 
-  Stream<MetroState> _mapMetroRunnedToState(MetroInitialized initEvent) async* {
+  Stream<MetroState> _mapMetroInitializedToState(MetroInitialized initEvent) async* {
     _tickerSubscription?.cancel();
     _tickerSubscription = _ticker.tick(initEvent.speed).listen((event) {
-      print(event.count);
       add(MetroTicked(count: event.count));
     });
   }

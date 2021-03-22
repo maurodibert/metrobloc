@@ -1,7 +1,7 @@
 import 'package:rive/rive.dart';
 
-class DotAnimation extends SimpleAnimation {
-  DotAnimation(String animationName) : super(animationName);
+class MetroAnimation extends SimpleAnimation {
+  MetroAnimation(String animationName) : super(animationName);
 
   start(double speed) {
     instance.animation.loop = Loop.loop;
